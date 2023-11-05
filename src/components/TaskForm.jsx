@@ -1,10 +1,20 @@
+import {useState} from 'react'
+
 const TaskForm = () => {
-  return (
-    <form>
-        <input type="text" name="add-task" id="add-task" placeholder="Add your new todo"/>
-        <button type="submit">+</button>
-    </form>
-  )
+
+    const [task, setTask] = useState('');
+    
+    return (
+        <form>
+            <input
+                type="text"
+                placeholder="Add your new todo"
+                value={task}
+                onChange = {(e) => setTask(e.target.value)} 
+            />
+            <button>+</button>
+        </form>
+    );
 }
 
 export default TaskForm

@@ -3,7 +3,7 @@ import TaskForm from "./components/TaskForm"
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <Header />
       <TaskForm />
     </div>
