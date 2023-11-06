@@ -5,9 +5,15 @@ const TaskForm = () => {
     const [task, setTask] = useState(''); // task debe ir vacio porque no hay tarea agregada aun
     const [taskList, setTaskList] = useState([]); // lista de tareas
 
+    const markTaskAsCompleted = (index) => {
+        const updatedTaskList = [...taskList]
+        updatedTaskList[index].completed = !updatedTaskList[index].completed;
+        setTaskList(updatedTaskList);
+    }
+
     const addTask = () => {
         if (task) {
-            setTaskList([...taskList, task]); // Agrega tasks a la lista
+            setTaskList([...taskList, { text: task, completed: false }]); // Agrega tasks a la lista
             setTask(''); // Borra el input despues de que se haya agregado una task
         }
     };
@@ -27,7 +33,15 @@ const TaskForm = () => {
 
             <ul>
                 {taskList.map((t, index) => (
-                    <li key={index}>{t}</li>
+                    <li
+                     style={{
+                        listStyleType: 'none', 
+                        cursor: 'pointer',
+                        textDecoration: t.completed ? 'line-through': 'none',
+                     }} 
+                     key={index}
+                     onClick={() => markTaskAsCompleted(index)}
+                     >{t.text}</li>
                 ))}
             </ul>
         </div>
