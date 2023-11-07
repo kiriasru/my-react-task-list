@@ -13,7 +13,8 @@ const TaskForm = () => {
 
     const addTask = () => {
         if (task) {
-            setTaskList([...taskList, { text: task, completed: false }]); // Agrega tasks a la lista
+            setTaskList([...taskList,
+                 { text: task, completed: false }]); // Agrega tasks a la lista
             setTask(''); // Borra el input despues de que se haya agregado una task
         }
     };
