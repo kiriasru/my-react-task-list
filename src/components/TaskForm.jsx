@@ -1,52 +1,66 @@
-import {useState} from 'react'
+import { useState } from 'react';
+import TaskItem from './TaskItem';
 
 const TaskForm = () => {
-// Configurar useState
-    const [task, setTask] = useState(''); // task debe ir vacio porque no hay tarea agregada aun
-    const [taskList, setTaskList] = useState([]); // lista de tareas
+  const [task, setTask] = useState('');
+  const [taskList, setTaskList] = useState([]);
 
-    const markTaskAsCompleted = (index) => {
-        const updatedTaskList = [...taskList]
-        updatedTaskList[index].completed = !updatedTaskList[index].completed;
-        setTaskList(updatedTaskList);
+  const addTask = () => {
+    if (task) {
+      setTaskList([...taskList, { text: task, completed: false }]);
+      setTask('');
     }
+  };
 
-    const addTask = () => {
-        if (task) {
-            setTaskList([...taskList,
-                 { text: task, completed: false }]); // Agrega tasks a la lista
-            setTask(''); // Borra el input despues de que se haya agregado una task
-        }
-    };
+  const modifyTask = (index, newText) => {
+    const updatedTaskList = [...taskList];
+    updatedTaskList[index].text = newText;
+    setTaskList(updatedTaskList);
+  };
 
-    return (
-        <div>
+  const deleteTask = (index) => {
+    const updatedTaskList = taskList.filter((_, i) => i !== index);
+    setTaskList(updatedTaskList);
+  };
 
-            <section>
-                <input
-                    type="text"
-                    placeholder="Add your new todo"
-                    value={task}
-                    onChange = {(e) => setTask(e.target.value)} 
-                />
-                <button onClick={addTask}>+</button>
-            </section>
+  const toggleTaskCompleted = (index) => {
+    const updatedTaskList = [...taskList];
+    updatedTaskList[index].completed = !updatedTaskList[index].completed;
+    setTaskList(updatedTaskList);
+  };
 
-            <ul>
-                {taskList.map((t, index) => (
-                    <li
-                     style={{
-                        listStyleType: 'none', 
-                        cursor: 'pointer',
-                        textDecoration: t.completed ? 'line-through': 'none',
-                     }} 
-                     key={index}
-                     onClick={() => markTaskAsCompleted(index)}
-                     >{t.text}</li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+  return (
+    <div>
+      <section>
+        <input
+          type="text"
+          placeholder="Add your new todo"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
+        <button onClick={addTask}>+</button>
+      </section>
 
-export default TaskForm
+      <ul>
+        {taskList.map((t, index) => (
+          <li
+            style={{
+              listStyleType: 'none',
+              cursor: 'pointer',
+            }}
+            key={index}
+          >
+            <TaskItem
+              task={t}
+              onModify={(newText) => modifyTask(index, newText)}
+              onDelete={() => deleteTask(index)}
+              onToggleCompleted={() => toggleTaskCompleted(index)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default TaskForm;

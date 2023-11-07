@@ -1,17 +1,20 @@
-// En TaskItem.jsx
 import { useState } from 'react';
 
-const TaskItem = ({ task, onModify, onDelete }) => {
+const TaskItem = ({ task, onModify, onDelete, onToggleCompleted }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTask, setNewTask] = useState(task.text);
 
   const handleUpdate = () => {
-    onModify(task.id, newTask);
+    onModify(newTask);
     setIsEditing(false);
   };
 
+  const handleDelete = () => {
+    onDelete();
+  };
+
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       {isEditing ? (
         <div>
           <input
@@ -22,14 +25,19 @@ const TaskItem = ({ task, onModify, onDelete }) => {
           <button onClick={handleUpdate}>Update</button>
         </div>
       ) : (
-        <div>
-          <input type="checkbox" checked={task.completed} />
-          <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+        <>
+          <span
+            style={{
+              textDecoration: task.completed ? 'line-through' : 'none',
+              cursor: 'pointer',
+            }}
+            onClick={onToggleCompleted}
+          >
             {task.text}
           </span>
           <button onClick={() => setIsEditing(true)}>✏️</button>
-          <button onClick={() => onDelete(task.id)}>🗑️</button>
-        </div>
+          <button onClick={handleDelete}>🗑️</button>
+        </>
       )}
     </div>
   );
