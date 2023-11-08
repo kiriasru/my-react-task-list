@@ -35,8 +35,8 @@ const TaskItem = ({ task, onModify, onDelete, onToggleCompleted }) => {
           >
             {task.text}
           </span>
-          <button onClick={() => setIsEditing(true)}>✏️</button>
-          <button onClick={handleDelete}>🗑️</button>
+          <button style={{cursor: 'pointer'}} onClick={() => setIsEditing(true)}>✏️</button>
+          <button style={{cursor: 'pointer'}} onClick={handleDelete}>🗑️</button>
         </>
       )}
     </div>
