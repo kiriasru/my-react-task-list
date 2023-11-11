@@ -1,5 +1,5 @@
-// TaskItem.jsx
 import { useState } from 'react';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const TaskItem = ({ task, onModify, onDelete, onToggleCompleted }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +29,9 @@ const TaskItem = ({ task, onModify, onDelete, onToggleCompleted }) => {
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
           />
-          <button onClick={handleUpdate}>Update</button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <FaEdit onClick={handleUpdate} style={{ cursor: 'pointer', marginRight: '15px' }} />
+          </div>
         </div>
       ) : (
         <div>
@@ -38,18 +40,16 @@ const TaskItem = ({ task, onModify, onDelete, onToggleCompleted }) => {
               style={{
                 textDecoration: task.completed ? 'line-through' : 'none',
                 cursor: 'pointer',
-                marginRight: '15px', // Puedes ajustar este margen según tus necesidades
+                marginRight: '15px',
               }}
               onClick={onToggleCompleted}
             >
               {task.text}
             </strong>
-            <button style={{ cursor: 'pointer' }} onClick={() => setIsEditing(true)}>
-              ✏️
-            </button>
-            <button style={{ cursor: 'pointer', marginLeft: '15px' }} onClick={handleDelete}>
-              🗑️
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', flex: '1' }}>
+              <FaEdit onClick={() => setIsEditing(true)} style={{ cursor: 'pointer', marginRight: '15px' }} />
+              <FaTrashAlt onClick={handleDelete} style={{ cursor: 'pointer' }} />
+            </div>
           </div>
           <p style={{ marginTop: '5px' }}>{task.description}</p>
         </div>
