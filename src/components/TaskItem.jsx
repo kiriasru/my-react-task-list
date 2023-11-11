@@ -1,4 +1,3 @@
-// TaskItem.jsx
 import { useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 

@@ -1,11 +1,21 @@
-// TaskForm.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskItem from './TaskItem';
 import { FaPlus } from 'react-icons/fa';
 
 const TaskForm = () => {
   const [task, setTask] = useState({ text: '', description: '', completed: false, isEditing: false });
   const [taskList, setTaskList] = useState([]);
+
+  // Cargar tareas desde localStorage al inicio
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('taskList')) || [];
+    setTaskList(storedTasks);
+  }, []);
+
+  // Guardar tareas en localStorage cada vez que la lista cambie
+  useEffect(() => {
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+  }, [taskList]);
 
   const addTask = () => {
     if (task.text) {
