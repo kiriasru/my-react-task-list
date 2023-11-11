@@ -1,20 +1,26 @@
+// TaskForm.jsx
 import { useState } from 'react';
 import TaskItem from './TaskItem';
 
 const TaskForm = () => {
   const [task, setTask] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
   const [taskList, setTaskList] = useState([]);
+  const [showDescriptionForm, setShowDescriptionForm] = useState(false);
 
   const addTask = () => {
-    if (task) {
-      setTaskList([...taskList, { text: task, completed: false }]);
+    if (task && taskDescription) {
+      setTaskList([...taskList, { text: task, description: taskDescription, completed: false }]);
       setTask('');
+      setTaskDescription('');
+      setShowDescriptionForm(false);
     }
   };
 
-  const modifyTask = (index, newText) => {
+  const modifyTask = (index, newText, newDescription) => {
     const updatedTaskList = [...taskList];
     updatedTaskList[index].text = newText;
+    updatedTaskList[index].description = newDescription;
     setTaskList(updatedTaskList);
   };
 
@@ -38,8 +44,20 @@ const TaskForm = () => {
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
-        <button onClick={addTask}>+</button>
+        <button onClick={() => setShowDescriptionForm(true)}>+</button>
       </section>
+
+      {showDescriptionForm && (
+        <section>
+          <input
+            type="text"
+            placeholder="Add task's description"
+            value={taskDescription}
+            onChange={(e) => setTaskDescription(e.target.value)}
+          />
+          <button onClick={addTask}>Submit</button>
+        </section>
+      )}
 
       <ul>
         {taskList.map((t, index) => (
@@ -52,7 +70,7 @@ const TaskForm = () => {
           >
             <TaskItem
               task={t}
-              onModify={(newText) => modifyTask(index, newText)}
+              onModify={(newText, newDescription) => modifyTask(index, newText, newDescription)}
               onDelete={() => deleteTask(index)}
               onToggleCompleted={() => toggleTaskCompleted(index)}
             />
