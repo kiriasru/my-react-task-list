@@ -6,13 +6,11 @@ const TaskForm = () => {
   const [task, setTask] = useState({ text: '', description: '', completed: false, isEditing: false });
   const [taskList, setTaskList] = useState([]);
 
-  // Cargar tareas desde localStorage al inicio
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('taskList')) || [];
     setTaskList(storedTasks);
   }, []);
 
-  // Guardar tareas en localStorage cada vez que la lista cambie
   useEffect(() => {
     localStorage.setItem('taskList', JSON.stringify(taskList));
   }, [taskList]);
@@ -20,7 +18,6 @@ const TaskForm = () => {
   const addTask = () => {
     if (task.text) {
       if (task.isEditing) {
-        // Modificar tarea existente
         const updatedTaskList = taskList.map((t) => (t.id === task.id ? { ...task } : t));
         setTaskList(updatedTaskList);
         setTask({ text: '', description: '', completed: false, isEditing: false });
@@ -33,13 +30,11 @@ const TaskForm = () => {
   };
 
   const startEditing = (index) => {
-    // Iniciar la edición de una tarea
     const taskToEdit = taskList[index];
     setTask({ ...taskToEdit, isEditing: true });
   };
 
   const cancelEditing = () => {
-    // Cancelar la edición
     setTask({ text: '', description: '', completed: false, isEditing: false });
   };
 
@@ -50,7 +45,6 @@ const TaskForm = () => {
   };
 
   const toggleTaskCompleted = (index) => {
-    // Alternar estado completado
     const updatedTaskList = [...taskList];
     updatedTaskList[index].completed = !updatedTaskList[index].completed;
     setTaskList(updatedTaskList);
@@ -58,7 +52,7 @@ const TaskForm = () => {
 
   return (
     <div>
-      <section style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+      <section>
         <input
           type="text"
           placeholder="Add your new todo"
@@ -71,24 +65,19 @@ const TaskForm = () => {
           value={task.description}
           onChange={(e) => setTask({ ...task, description: e.target.value })}
         />
-        <button onClick={addTask} style={{ marginLeft: '10px' }}>
+        <button onClick={addTask}>
           {task.isEditing ? 'Update' : 'Add'}
         </button>
         {task.isEditing && (
-          <button onClick={cancelEditing} style={{ marginLeft: '10px' }}>
+          <button onClick={cancelEditing}>
             Cancel
           </button>
         )}
       </section>
 
-      <ul style={{ padding: '0', marginTop: '10px' }}>
+      <ul>
         {taskList.map((t, index) => (
           <li
-            style={{
-              listStyleType: 'none',
-              marginBottom: '10px',
-              textAlign: 'left',
-            }}
             key={index}
           >
             <TaskItem
