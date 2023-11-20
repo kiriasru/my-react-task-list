@@ -24,6 +24,7 @@ const useTaskManager = (initialTasks = []) => {
     addTask,
     deleteTask,
     updateTask,
+    setTasks,
   };
 };
 

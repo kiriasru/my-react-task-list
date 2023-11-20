@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import useTaskManager from './useTaskManager'; // Importando el hook
+import useTaskManager from '../hooks/useTaskManager';
 
 const TaskItem = ({ task, onStartEditing, onDelete, onToggleCompleted }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTask, setNewTask] = useState(task.text);
   const [newDescription, setNewDescription] = useState(task.description);
-
-  // Utilizando el hook para actualizar la tarea
   const { updateTask } = useTaskManager([]);
 
   const handleUpdate = () => {

@@ -1,23 +1,22 @@
 import { useState, useEffect } from 'react';
 import TaskItem from './TaskItem';
-import useTaskManager from './useTaskManager'; // Importando el hook
+import useTaskManager from '../hooks/useTaskManager';
+import { getStoredTasks, storeTasks } from '../utils/localStorage';
 
 const TaskForm = () => {
   const [task, setTask] = useState({ text: '', description: '', completed: false, isEditing: false });
-
-  // Reemplazando el estado local por el hook personalizado
-  const { tasks, addTask, deleteTask, updateTask } = useTaskManager([]);
+  const { tasks, addTask, deleteTask, updateTask, setTasks } = useTaskManager([]);
 
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('taskList')) || [];
+    const storedTasks = getStoredTasks() || [];
     setTasks(storedTasks);
-  }, []);
+  }, [setTasks]);
 
   useEffect(() => {
-    localStorage.setItem('taskList', JSON.stringify(tasks));
+    storeTasks(tasks);
   }, [tasks]);
 
-  const addTask = () => {
+  const handleAddTask = () => {
     if (task.text) {
       if (task.isEditing) {
         updateTask({ ...task });
@@ -38,7 +37,7 @@ const TaskForm = () => {
     setTask({ text: '', description: '', completed: false, isEditing: false });
   };
 
-  const deleteTask = (index) => {
+  const handleDeleteTask = (index) => {
     deleteTask(tasks[index].id);
   };
 
@@ -62,7 +61,7 @@ const TaskForm = () => {
           value={task.description}
           onChange={(e) => setTask({ ...task, description: e.target.value })}
         />
-        <button onClick={addTask}>
+        <button onClick={handleAddTask}>
           {task.isEditing ? 'Update' : 'Add'}
         </button>
         {task.isEditing && (
@@ -78,7 +77,7 @@ const TaskForm = () => {
             <TaskItem
               task={t}
               onStartEditing={() => startEditing(index)}
-              onDelete={() => deleteTask(index)}
+              onDelete={() => handleDeleteTask(index)}
               onToggleCompleted={() => toggleTaskCompleted(index)}
             />
           </li>
