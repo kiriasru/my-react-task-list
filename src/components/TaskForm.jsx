@@ -1,36 +1,36 @@
 import { useState, useEffect } from 'react';
 import TaskItem from './TaskItem';
-import { FaPlus } from 'react-icons/fa';
+import useTaskManager from './useTaskManager'; // Importando el hook
 
 const TaskForm = () => {
   const [task, setTask] = useState({ text: '', description: '', completed: false, isEditing: false });
-  const [taskList, setTaskList] = useState([]);
+
+  // Reemplazando el estado local por el hook personalizado
+  const { tasks, addTask, deleteTask, updateTask } = useTaskManager([]);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('taskList')) || [];
-    setTaskList(storedTasks);
+    setTasks(storedTasks);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-  }, [taskList]);
+    localStorage.setItem('taskList', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
     if (task.text) {
       if (task.isEditing) {
-        const updatedTaskList = taskList.map((t) => (t.id === task.id ? { ...task } : t));
-        setTaskList(updatedTaskList);
+        updateTask({ ...task });
         setTask({ text: '', description: '', completed: false, isEditing: false });
       } else {
-        // Agregar nueva tarea
-        setTaskList([...taskList, { ...task, id: Date.now() }]);
+        addTask(task);
         setTask({ text: '', description: '', completed: false, isEditing: false });
       }
     }
   };
 
   const startEditing = (index) => {
-    const taskToEdit = taskList[index];
+    const taskToEdit = tasks[index];
     setTask({ ...taskToEdit, isEditing: true });
   };
 
@@ -39,15 +39,12 @@ const TaskForm = () => {
   };
 
   const deleteTask = (index) => {
-    // Eliminar tarea
-    const updatedTaskList = taskList.filter((_, i) => i !== index);
-    setTaskList(updatedTaskList);
+    deleteTask(tasks[index].id);
   };
 
   const toggleTaskCompleted = (index) => {
-    const updatedTaskList = [...taskList];
-    updatedTaskList[index].completed = !updatedTaskList[index].completed;
-    setTaskList(updatedTaskList);
+    const updatedTask = { ...tasks[index], completed: !tasks[index].completed };
+    updateTask(updatedTask);
   };
 
   return (
@@ -76,16 +73,13 @@ const TaskForm = () => {
       </section>
 
       <ul>
-        {taskList.map((t, index) => (
-          <li
-            key={index}
-          >
+        {tasks.map((t, index) => (
+          <li key={index}>
             <TaskItem
               task={t}
-              onModify={(newText, newDescription) => setTask({ text: newText, description: newDescription, completed: false, isEditing: true })}
+              onStartEditing={() => startEditing(index)}
               onDelete={() => deleteTask(index)}
               onToggleCompleted={() => toggleTaskCompleted(index)}
-              onStartEditing={() => startEditing(index)}
             />
           </li>
         ))}
