@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import useTaskManager from '../hooks/useTaskManager';
 
-const TaskItem = ({ task, onModify, onDelete, onToggleCompleted, onStartEditing }) => {
+const TaskItem = ({ task, onStartEditing, onDelete, onToggleCompleted }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTask, setNewTask] = useState(task.text);
   const [newDescription, setNewDescription] = useState(task.description);
+  const { updateTask } = useTaskManager([]);
 
   const handleUpdate = () => {
-    onModify(newTask, newDescription);
+    updateTask({ ...task, text: newTask, description: newDescription });
     setIsEditing(false);
   };
 
@@ -18,7 +20,7 @@ const TaskItem = ({ task, onModify, onDelete, onToggleCompleted, onStartEditing 
   return (
     <div>
       {isEditing ? (
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <input
             type="text"
             value={newTask}
@@ -29,29 +31,28 @@ const TaskItem = ({ task, onModify, onDelete, onToggleCompleted, onStartEditing 
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
           />
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <FaEdit onClick={handleUpdate} style={{ cursor: 'pointer', marginRight: '5px' }} />
+          <div>
+            <FaEdit onClick={handleUpdate} style={{ cursor: 'pointer' }} />
           </div>
         </div>
       ) : (
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
+          <div>
             <strong
               style={{
                 textDecoration: task.completed ? 'line-through' : 'none',
                 cursor: 'pointer',
-                marginRight: '8px', // Ajuste aquí para separar el texto de los iconos
               }}
               onClick={onToggleCompleted}
             >
               {task.text}
             </strong>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', flex: '1' }}>
-              <FaEdit onClick={() => onStartEditing()} style={{ cursor: 'pointer', marginRight: '5px' }} />
+            <div>
+              <FaEdit onClick={() => onStartEditing()} style={{ cursor: 'pointer' }} />
               <FaTrashAlt onClick={handleDelete} style={{ cursor: 'pointer' }} />
             </div>
           </div>
-          <p style={{ marginTop: '5px' }}>{task.description}</p>
+          <p>{task.description}</p>
         </div>
       )}
     </div>
