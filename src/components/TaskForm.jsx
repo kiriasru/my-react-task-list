@@ -4,12 +4,7 @@ import useTaskManager from '../hooks/useTaskManager';
 import { getStoredTasks, storeTasks } from '../utils/localStorage';
 
 const TaskForm = () => {
-  const [task, setTask] = useState({
-    text: '',
-    description: '',
-    completed: false,
-    isEditing: false,
-  });
+  const [task, setTask] = useState({ text: '', description: '', completed: false, isEditing: false });
   const { tasks, addTask, deleteTask, updateTask, setTasks } = useTaskManager([]);
 
   useEffect(() => {
@@ -22,19 +17,9 @@ const TaskForm = () => {
   }, [tasks]);
 
   const [taskNameError, setTaskNameError] = useState('');
-  const [taskDescError, setTaskDescError] = useState('');
 
   const handleAddTask = () => {
-    const isTitleEmpty = !task.text.trim();
-    const isDescriptionFilled = !!task.description.trim();
-
-    if (isTitleEmpty && isDescriptionFilled) {
-      setTaskDescError('Task must have a title.');
-      setTaskNameError('');
-    } else if (task.text.length < 3) {
-      setTaskNameError('Task name should be at least 3 characters long.');
-      setTaskDescError('');
-    } else {
+    if (task.text.length >= 3) {
       if (task.isEditing) {
         updateTask({ ...task });
         setTask({ text: '', description: '', completed: false, isEditing: false });
@@ -43,7 +28,8 @@ const TaskForm = () => {
         setTask({ text: '', description: '', completed: false, isEditing: false });
       }
       setTaskNameError('');
-      setTaskDescError('');
+    } else {
+      setTaskNameError('Task name should be at least 3 characters long.');
     }
   };
 
@@ -71,11 +57,6 @@ const TaskForm = () => {
       ...prevTask,
       [name]: value,
     }));
-    if (name === 'description' && !value.trim() && !task.text.trim()) {
-      setTaskDescError('Task must have a title.');
-    } else {
-      setTaskDescError('');
-    }
   };
 
   const handleTaskSubmit = (e) => {
@@ -89,7 +70,8 @@ const TaskForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleTaskSubmit}>
+      <form className='container-form' onSubmit={handleTaskSubmit}>
+        <label className='subtitle'>Add new task:</label>
         <input
           type="text"
           placeholder="Add your new todo"
@@ -99,7 +81,7 @@ const TaskForm = () => {
         />
         <input
           type="text"
-          placeholder="Task description"
+          placeholder="Task description (optional)"
           name="description"
           value={task.description}
           onChange={handleTaskChange}
@@ -117,12 +99,6 @@ const TaskForm = () => {
       {taskNameError && (
         <div className="error" style={{ color: 'red' }}>
           {taskNameError}
-        </div>
-      )}
-
-      {taskDescError && (
-        <div className="error" style={{ color: 'red' }}>
-          {taskDescError}
         </div>
       )}
 

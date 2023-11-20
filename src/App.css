@@ -9,3 +9,20 @@
     align-items: center;
     justify-content: center
 }
+
+.App {
+    width: 600px;
+}
+
+.container-form {
+    display: grid;
+    grid-template-columns: 1fr;
+
+}
+
+.subtitle {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: #7C93C3;
+}
