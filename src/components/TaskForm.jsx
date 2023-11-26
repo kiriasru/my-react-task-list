@@ -72,14 +72,15 @@ const TaskForm = () => {
     <div>
       <form className='container-form' onSubmit={handleTaskSubmit}>
         <label className='subtitle'>Add new task:</label>
-        <input
+        <input className='add-task'
           type="text"
           placeholder="Add your new todo"
           name="text"
           value={task.text}
           onChange={handleTaskChange}
-        />
-        <input
+        /><br/>
+        <label className='subtitle2'>Task Description:</label>
+        <input className='add-description'
           type="text"
           placeholder="Task description (optional)"
           name="description"
@@ -102,9 +103,10 @@ const TaskForm = () => {
         </div>
       )}
 
-      <ul>
+      <ul className='added-task'>
         {tasks.map((t, index) => (
-          <li key={index}>
+          <div className='task-wrapper' key={ index }>
+          <li className='task-list' key={index}>
             <TaskItem
               task={t}
               onStartEditing={() => startEditing(index)}
@@ -112,6 +114,7 @@ const TaskForm = () => {
               onToggleCompleted={() => toggleTaskCompleted(index)}
             />
           </li>
+          </div>
         ))}
       </ul>
     </div>

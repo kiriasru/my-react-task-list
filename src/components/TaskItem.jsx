@@ -18,7 +18,7 @@ const TaskItem = ({ task, onStartEditing, onDelete, onToggleCompleted }) => {
   };
 
   return (
-    <div>
+    <div className='task-icons'>
       {isEditing ? (
         <div>
           <input
@@ -47,9 +47,9 @@ const TaskItem = ({ task, onStartEditing, onDelete, onToggleCompleted }) => {
             >
               {task.text}
             </strong>
-            <div>
-              <FaEdit onClick={() => onStartEditing()} style={{ cursor: 'pointer' }} />
-              <FaTrashAlt onClick={handleDelete} style={{ cursor: 'pointer' }} />
+            <div className='icons'>
+              <FaEdit className='edit-icon' onClick={() => onStartEditing()} style={{ cursor: 'pointer' }} />
+              <FaTrashAlt className='delete-icon' onClick={handleDelete} style={{ cursor: 'pointer' }} />
             </div>
           </div>
           <p>{task.description}</p>

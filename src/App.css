@@ -25,4 +25,61 @@
     margin-bottom: 15px;
     grid-column: 1 / -1;
     color: #7C93C3;
+    font-weight: bold;
+}
+
+.subtitle2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: #7C93C3;
+    font-weight: bold;
+}
+
+.task-list {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr 45px 9%;
+    height: 65px;
+    align-items: center;
+    font-size: 15px;
+    color: black;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.add-description {
+    max-width: 100%;
+    height: 45%;
+    font-size: 100%;
+    border-radius: 5px;
+    border-color: rgb(118, 89, 43);
+    padding-left: 20px;
+    margin-top: 2px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 10px;
+    grid-column: 1 / -1;
+    margin-bottom: 25px;
+}
+
+.add-task {
+    max-width: 100%;
+    height: 45%;
+    font-size: 100%;
+    border-radius: 5px;
+    border-color: rgb(118, 89, 43);
+    padding-left: 20px;
+    margin-top: 2px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 10px;
+    grid-column: 1 / -1;
+}
+
+.task-wrapper {
+    background-color: #9EB8D9;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: -40px;
+    margin-bottom: 15px;
+
 }
