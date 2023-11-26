@@ -1,1 +1,2 @@
-
+El producto cuenta ahora con un custom hook que vuelve mucho más ordenado y legible el código. Además mantiene simepre la mimsa funcionalidad.
+El producto también cuenta con un formulario y validación, que devuelve un mensaje en caso que el título de una tarea tenga menos de tres caracteres y si solamente se ha agregado la descripción sin la tarea. También da la opción de solo poner título a cada tarea, dejando la descripción como opcional.
