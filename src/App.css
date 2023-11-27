@@ -87,3 +87,35 @@
     margin-bottom: 15px;
 
 }
+
+.h2-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: #A25772;
+    font-weight: bold;
+}
+
+.h3-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: rgb(38, 38, 38);
+    font-weight: bold;
+}
+
+.home-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: #A25772;
+    font-weight: bold;
+}
+
+.list-item {
+    font-size: 20px;
+    margin-bottom: 15px;
+    grid-column: 1 / -1;
+    color: rgb(107, 62, 62);
+    font-weight: bold;
+}
