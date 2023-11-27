@@ -53,13 +53,15 @@
     height: 45%;
     font-size: 100%;
     border-radius: 5px;
-    border-color: rgb(118, 89, 43);
+    border-color: #A25772;
     padding-left: 20px;
     margin-top: 2px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 10px;
     grid-column: 1 / -1;
     margin-bottom: 25px;
+    background-color: aliceblue;
+    color: black;
 }
 
 .add-task {
@@ -67,12 +69,14 @@
     height: 45%;
     font-size: 100%;
     border-radius: 5px;
-    border-color: rgb(118, 89, 43);
+    border-color: #A25772;
     padding-left: 20px;
     margin-top: 2px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 10px;
     grid-column: 1 / -1;
+    background-color: aliceblue;
+    color: black;
 }
 
 .task-wrapper {
